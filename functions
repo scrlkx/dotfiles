@@ -1,0 +1,28 @@
+function composer_fresh() {
+    rm -rf vendor/
+    composer install
+}
+
+function laravel() {
+    curl -s https://laravel.build/$1 | bash
+}
+
+function package_grep() {
+    sudo dpkg -l | grep $1
+}
+
+function port_grep() {
+    sudo lsof -i:$1
+}
+
+function restart() {
+    sudo service $1 restart
+}
+
+function start() {
+    sudo service $1 start
+}
+
+function stop() {
+    sudo service $1 stop
+}

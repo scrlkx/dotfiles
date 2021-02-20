@@ -1,0 +1,8 @@
+alias artisan="php artisan"
+alias c="clear"
+alias dc="docker-compose"
+alias reload!='. ~/.zshrc'
+alias sail="./vendor/bin/sail"
+alias y="ydiff"
+alias yii="php yii"
+alias zshrc="subl ~/.zshrc"

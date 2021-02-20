@@ -1,0 +1,19 @@
+[apply]
+    whitespace = nowarn
+[branch]
+    sort = -committerdate
+[color]
+    ui = auto
+[core]
+    autocrlf = input
+    editor = vim
+    untrackedCache = true
+[help]
+    autocorrect = 1
+[init]
+    defaultBranch = main
+[push]
+  default = simple
+[user]
+    email = daniel1208x@gmail.com
+    name = Daniel Freitas
