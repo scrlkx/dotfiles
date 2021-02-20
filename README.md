@@ -4,7 +4,7 @@ Set of my personal dotfiles.
 
 ## What's inside
 
-There are several cool things, with settings for git, hyper, zsh and more.
+There are several cool things like settings for git, hyper, zsh and more.
 
 ## Usage
 
