@@ -1,0 +1,11 @@
+{
+	"color_scheme": "Packages/ayu/ayu-light.sublime-color-scheme",
+	"font_face": "Fira Code",
+	"font_size": 24,
+	"highlight_line": true,
+	"hot_exit": false,
+	"line_padding_bottom": 10,
+	"line_padding_top": 10,
+	"remember_open_files": false,
+	"theme": "ayu-light.sublime-theme",
+}
