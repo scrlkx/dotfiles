@@ -151,9 +151,9 @@ module.exports = {
     //   `@company/project`
     //   `project#1.0.1`
     plugins: [
-        "hypercwd",
-        "hyper-material-theme",
-        "hyper-tabs-enhanced"
+        'hypercwd',
+        'hyper-material-theme',
+        'hyper-tabs-enhanced'
     ],
 
     // in development, you can create a directory under
@@ -162,7 +162,6 @@ module.exports = {
     localPlugins: [],
 
     keymaps: {
-        // Example
-        // 'window:devtools': 'cmd+alt+o',
+        'pane:close': 'ctrl+w',
     },
 };

@@ -5,4 +5,5 @@ alias reload!='. ~/.zshrc'
 alias sail="./vendor/bin/sail"
 alias y="ydiff"
 alias yii="php yii"
+alias hyperjs="subl ~/.hyper.js"
 alias zshrc="subl ~/.zshrc"
