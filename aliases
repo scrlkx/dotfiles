@@ -1,6 +1,7 @@
 alias artisan="php artisan"
 alias c="clear"
 alias dc="docker-compose"
+alias markdown="glow"
 alias reload!='. ~/.zshrc'
 alias sail="./vendor/bin/sail"
 alias y="ydiff"
