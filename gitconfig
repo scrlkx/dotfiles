@@ -1,0 +1,44 @@
+[alias]
+    amend = commit --amend
+    gone = !"git branch --merged | grep -vE 'main|master|\\*' | xargs -n 1 git branch -D"
+    last = log -1 --oneline --color
+    undo = reset HEAD~1 --mixed
+    unpushed = log @{u}..
+    wip = !"git add -u && git commit -m \"wip\""
+[apply]
+    whitespace = nowarn
+[branch]
+    sort = -committerdate
+[color]
+	ui = true
+[color "diff"]
+    commit = "yellow bold"
+    frag = "magenta bold"
+    func = "146 bold"
+    meta = "11"
+    new = "green bold"
+    old = "red bold"
+    whitespace = "red reverse"
+[color "diff-highlight"]
+	newHighlight = green bold 22
+	newNormal = green bold
+    oldHighlight = red bold 52
+    oldNormal = red bold
+[core]
+    autocrlf = input
+    editor = vim
+	pager = "diff-so-fancy | less --tabs=4 -RFX"
+    untrackedCache = true
+[fetch]
+    prune = true
+    pruneTags = true 
+[help]
+    autocorrect = 1
+[include]
+    path = ~/.gitconfig.local
+[init]
+    defaultBranch = main
+[interactive]
+    diffFilter = "diff-so-fancy --patch"
+[pull]
+	rebase = false
