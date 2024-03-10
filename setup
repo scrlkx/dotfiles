@@ -3,37 +3,130 @@
 set -e
 [ -n "$DEBUG" ] && set -x
 
+check_requirement() {
+    if ! command -v $1 &> /dev/null; then
+        echo "Ops! $2 was not found, you will need to install it and try again."
+        [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
+    fi
+}
+
+backup() {
+    # Saved a backup if the specified file exists.
+    [[ -f "$1/$2" ]] || cp -d "$1/$2" "$3/$2"
+}
+
+config() {
+    # Delete a possible existent file in the target location.
+    [[ -f "$3/$2" ]] || rm "$3/$2"
+
+    # Copy the config file to the target location.
+    cp "$1/$2" "$3/$2"
+}
+
+check_recommendations() {
+    MISSING=()
+
+    for CMD in "$@"; do
+        if ! command -v "$CMD" &> /dev/null; then
+            MISSING+=("$CMD")
+        fi
+    done
+
+    if [ ${#MISSING[@]} -gt 0 ]; then
+        echo
+        echo "The following recommended resources was not found. Please, consider installing them right after we are done."
+
+        for CMD in "${MISSING[@]}"; do
+            echo "- $CMD"
+        done
+    fi
+}
+
+echo "Starting to setup your Linux..."
+
 USER=${USER:-$(id -u -n)}
 HOME="${HOME:-$(getent passwd $USER 2>/dev/null | cut -d: -f6)}"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-apply() {
-    if [ $3 -ne 1 ]; then
-        rm -rf "$2"
-    fi
+echo
+echo "Please, review the information bellow."
+echo "User name: ${USER}"
+echo "Home folder: ${HOME}"
 
-    if [[ -e "$1" ]]; then
-        ln -s -f "$1" "$2"
-    else
-        touch "$2"
-    fi
-}
+echo 
+read -p "Continue? [y/n] " -n 1 -r
+echo
 
-if which zsh > /dev/null; then
-    echo "Configuring Shell (Z Shell)"
-    apply "$BASEDIR/zshrc" "$HOME/.zshrc" 0
-    apply "$BASEDIR/aliases" "$HOME/.aliases" 0
-    apply "$BASEDIR/localrc" "$HOME/.localrc" 1
-else
-    echo "Z Shell is not installed, skipping setup (including Antigen)"
+if [[ ! $REPLY =~ ^[Yy]$ ]] then
+    echo "Exiting..."
+    [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
 fi
 
-if which git > /dev/null; then
-    echo "Configuring Git"
-    apply "$BASEDIR/gitconfig" "$HOME/.gitconfig" 0
-    apply "$BASEDIR/gitconfig.local" "$HOME/.gitconfig.local" 1
-else
-    echo "Git is not installed, skipping setup"
-fi
+echo
+echo "Checking for all requirements..."
 
-echo -e "\nDone!"
+check_requirement "curl" "curl"
+check_requirement "git" "Git"
+check_requirement "zsh" "ZSH"
+
+echo "All good!"
+
+BACKUP_FOLDER="$HOME/dotfiles_backup"
+
+echo
+echo "Backing up existent files..."
+
+# Delete the current backup folder if it exists.
+[[ -d $BACKUP_FOLDER ]] || rm -r $BACKUP_FOLDER
+
+# Creates a new backup folder.
+mkdir -p $BACKUP_FOLDER
+
+backup $HOME ".aliases" $BACKUP_FOLDER
+backup $HOME ".localrc" $BACKUP_FOLDER
+backup $HOME ".zshrc" $BACKUP_FOLDER
+backup $HOME ".gitconfig" $BACKUP_FOLDER
+backup $HOME ".gitconfig.local" $BACKUP_FOLDER
+
+echo "Saved at $BACKUP_FOLDER"
+
+echo
+
+echo "Setting up Shell..."
+config "$BASEDIR/config" ".aliases" $HOME
+config "$BASEDIR/config" ".localrc" $HOME
+[[ ! -d "$HOME/.local/bin" ]] || mkdir -p "$HOME/.local/bin"
+echo "Done!"
+
+echo
+echo "Setting up Antigen..."
+[[ -f $HOME/antigen.zsh ]] || curl -sS -L git.io/antigen > $HOME/antigen.zsh
+echo "Done!"
+
+echo
+echo "Setting up ZSH..."
+config "$BASEDIR/config" ".zshrc" $HOME
+echo "Done!"
+
+echo
+echo "Setting up Powerlevel10k..."
+[[ -d $HOME/powerlevel10k ]] || git clone --quiet --depth=1 https://gitee.com/romkatv/powerlevel10k.git $HOME/powerlevel10k
+echo "Done!"
+
+echo
+echo "Setting up Git..."
+config "$BASEDIR/config" ".gitconfig" $HOME
+config "$BASEDIR/config" ".gitconfig.local" $HOME
+echo "Done!"
+
+echo
+echo "Setting up nvm"
+    if ! command -v nvm &> /dev/null; then
+        PROFILE=/dev/null bash -c 'curl -sS -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash > /dev/null 2>&1'
+    fi
+echo "Done!"
+
+check_recommendations "vim" "xclip" "diff-so-fancy" "bat" "glow"
+
+echo
+echo "All done! Go ahead and make a good use of your OS."
