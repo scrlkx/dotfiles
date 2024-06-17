@@ -5,21 +5,25 @@ set -e
 
 check_requirement() {
     if ! command -v $1 &> /dev/null; then
-        echo "Ops! $2 was not found, you will need to install it and try again."
-        [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
+        echo "Ops! $2 was not found, you will have to install it and try again."
+        
+        if [[ "$0" = "$BASH_SOURCE" ]] then
+            exit 1
+        fi
     fi
 }
 
 backup() {
-    # Saved a backup if the specified file exists.
-    [[ -f "$1/$2" ]] || cp -d "$1/$2" "$3/$2"
+    if [[ -f "$1/$2" ]] then
+        cp -d "$1/$2" "$3/$2"
+    fi
 }
 
 config() {
-    # Delete a possible existent file in the target location.
-    [[ -f "$3/$2" ]] || rm "$3/$2"
+    if [[ -f "$3/$2" ]] then
+        rm "$3/$2"
+    fi
 
-    # Copy the config file to the target location.
     cp "$1/$2" "$3/$2"
 }
 
@@ -44,22 +48,26 @@ check_recommendations() {
 
 echo "Starting to setup your Linux..."
 
-USER=${USER:-$(id -u -n)}
-HOME="${HOME:-$(getent passwd $USER 2>/dev/null | cut -d: -f6)}"
-BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+USER="${USER:-$(id -u -n)}"
+HOME_DIR="${HOME_DIR:-$(getent passwd $USER 2>/dev/null | cut -d: -f6)}"
+FONTS_DIR="$HOME_DIR/.fonts"
+SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo
 echo "Please, review the information bellow."
 echo "User name: ${USER}"
-echo "Home folder: ${HOME}"
+echo "Home folder: ${HOME_DIR}"
 
-echo 
+echo
 read -p "Continue? [y/n] " -n 1 -r
 echo
 
 if [[ ! $REPLY =~ ^[Yy]$ ]] then
     echo "Exiting..."
-    [[ "$0" = "$BASH_SOURCE" ]] && exit 1 || return 1
+    
+    if [[ "$0" = "$BASH_SOURCE" ]] then
+        exit 1
+    fi
 fi
 
 echo
@@ -71,59 +79,89 @@ check_requirement "zsh" "ZSH"
 
 echo "All good!"
 
-BACKUP_FOLDER="$HOME/dotfiles_backup"
+BACKUP_FOLDER="$HOME_DIR/dotfiles_backup"
 
 echo
 echo "Backing up existent files..."
 
-# Delete the current backup folder if it exists.
-[[ -d $BACKUP_FOLDER ]] || rm -r $BACKUP_FOLDER
+if [[ -d $BACKUP_FOLDER ]] then
+    rm -r $BACKUP_FOLDER
+fi
 
-# Creates a new backup folder.
 mkdir -p $BACKUP_FOLDER
 
-backup $HOME ".aliases" $BACKUP_FOLDER
-backup $HOME ".localrc" $BACKUP_FOLDER
-backup $HOME ".zshrc" $BACKUP_FOLDER
-backup $HOME ".gitconfig" $BACKUP_FOLDER
-backup $HOME ".gitconfig.local" $BACKUP_FOLDER
+backup $HOME_DIR ".aliases" $BACKUP_FOLDER
+backup $HOME_DIR ".localrc" $BACKUP_FOLDER
+backup $HOME_DIR ".zshrc" $BACKUP_FOLDER
+backup $HOME_DIR ".gitconfig" $BACKUP_FOLDER
+backup $HOME_DIR ".gitconfig.local" $BACKUP_FOLDER
 
 echo "Saved at $BACKUP_FOLDER"
 
 echo
 
 echo "Setting up Shell..."
-config "$BASEDIR/config" ".aliases" $HOME
-config "$BASEDIR/config" ".localrc" $HOME
-[[ ! -d "$HOME/.local/bin" ]] || mkdir -p "$HOME/.local/bin"
+config "$SOURCE_DIR/config" ".aliases" $HOME_DIR
+config "$SOURCE_DIR/config" ".localrc" $HOME_DIR
+
+if [[ ! -d "$HOME_DIR/.local/bin" ]] then
+    mkdir -p "$HOME_DIR/.local/bin"
+fi
+
 echo "Done!"
 
 echo
 echo "Setting up Antigen..."
-[[ -f $HOME/antigen.zsh ]] || curl -sS -L git.io/antigen > $HOME/antigen.zsh
+
+if [[ ! -f "$HOME_DIR/antigen.zsh" ]] then
+    curl -sS -L git.io/antigen > $HOME_DIR/antigen.zsh
+fi
+
 echo "Done!"
 
 echo
 echo "Setting up ZSH..."
-config "$BASEDIR/config" ".zshrc" $HOME
+config "$SOURCE_DIR/config" ".zshrc" $HOME_DIR
 echo "Done!"
 
 echo
 echo "Setting up Powerlevel10k..."
-[[ -d $HOME/powerlevel10k ]] || git clone --quiet --depth=1 https://gitee.com/romkatv/powerlevel10k.git $HOME/powerlevel10k
+
+if [[ ! -d "$HOME_DIR/powerlevel10k" ]] then
+    git clone --quiet --depth=1 https://gitee.com/romkatv/powerlevel10k.git $HOME_DIR/powerlevel10k
+fi
+
 echo "Done!"
 
 echo
 echo "Setting up Git..."
-config "$BASEDIR/config" ".gitconfig" $HOME
-config "$BASEDIR/config" ".gitconfig.local" $HOME
+config "$SOURCE_DIR/config" ".gitconfig" $HOME_DIR
+config "$SOURCE_DIR/config" ".gitconfig.local" $HOME_DIR
 echo "Done!"
 
 echo
-echo "Setting up nvm"
-    if ! command -v nvm &> /dev/null; then
+echo "Setting up NVM..."
+    if [[ ! command -v nvm &> /dev/null ]] then
         PROFILE=/dev/null bash -c 'curl -sS -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash > /dev/null 2>&1'
     fi
+echo "Done!"
+
+echo
+echo "Setting up custom fonts"
+    if [[ ! -d "$FONTS_DIR" ]]; then
+        mkdir "$FONTS_DIR"
+    fi
+
+    for FONT_FOLDER in "$SOURCE_DIR/fonts"/*; do
+        if [[ -d "$FONT_FOLDER" ]]; then
+            FONT_NAME="$(basename "$FONT_FOLDER")"
+            TARGET_DIR="$FONTS_DIR/$FONT_NAME"
+
+            cp -r "$FONT_FOLDER" "$TARGET_DIR"
+        fi
+    done
+
+    fc-cache -f
 echo "Done!"
 
 check_recommendations "vim" "xclip" "diff-so-fancy" "bat" "glow"
