@@ -50,13 +50,15 @@ echo "Starting to setup your Linux..."
 
 USER="${USER:-$(id -u -n)}"
 HOME_DIR="${HOME_DIR:-$(getent passwd $USER 2>/dev/null | cut -d: -f6)}"
-FONTS_DIR="$HOME_DIR/.fonts"
+FONTS_DIR="$HOME_DIR/.local/share/fonts"
 SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo
 echo "Please, review the information bellow."
 echo "User name: ${USER}"
 echo "Home folder: ${HOME_DIR}"
+echo
+echo "Existing configuration files will be overwritten."
 
 echo
 read -p "Continue? [y/n] " -n 1 -r
