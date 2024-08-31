@@ -133,6 +133,8 @@ if [[ ! -d "$HOME_DIR/powerlevel10k" ]] then
     git clone --quiet --depth=1 https://gitee.com/romkatv/powerlevel10k.git $HOME_DIR/powerlevel10k
 fi
 
+config "$SOURCE_DIR/config" ".p10k.zsh" $HOME_DIR
+
 echo "Done!"
 
 echo
