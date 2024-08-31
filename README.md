@@ -15,6 +15,7 @@ Uncover an array of exciting features within this repository, including:
 - **Z Shell Customization:** Elevate your shell experience through seamless Z Shell (ZSH) integration, a curated selection of plugins, and effortless management with Antigen.
 - **Powerlevel10k Theming**: Customize your shell's appearance and functionality with the Powerlevel10k theme.
 - **Node Version Manager (nvm) Setup:** Simplify Node.js version management with seamless nvm integration.
+- **Custom Fonts**: Improve your terminal's readability and aesthetics by integrating custom fonts that complement your theme and layout.
 
 And more!
 
@@ -42,7 +43,6 @@ Additionally, the script checks for the availability of the following resources 
 
 - [vim][]: A highly configurable text editor.
 - [xclip][]: A command-line interface to the X11 clipboard.
-- [diff-so-fancy][]: A Git diff-highlighting tool.
 - [bat][]: A cat clone with syntax highlighting and Git integration.
 - [glow][]: A terminal markdown viewer with a TUI (Text-based User Interface).
 
@@ -57,6 +57,5 @@ If you want to manually access your backup files or verify that the backup was s
 [Z Shell (ZSH)]: https://www.zsh.org
 [vim]: https://www.vim.org/
 [xclip]: https://github.com/astrand/xclip
-[diff-so-fancy]: https://github.com/so-fancy/diff-so-fancy
 [bat]: https://github.com/sharkdp/bat
 [glow]: https://github.com/charmbracelet/glow

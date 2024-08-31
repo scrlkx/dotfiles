@@ -174,7 +174,7 @@ echo "Setting up custom fonts"
     fc-cache -f
 echo "Done!"
 
-check_recommendations "vim" "xclip" "diff-so-fancy" "bat" "glow"
+check_recommendations "vim" "xclip" "bat" "glow"
 
 echo
 echo "All done! Go ahead and make a good use of your OS."
