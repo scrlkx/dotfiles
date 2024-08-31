@@ -51,6 +51,7 @@ echo "Starting to setup your Linux..."
 USER="${USER:-$(id -u -n)}"
 HOME_DIR="${HOME_DIR:-$(getent passwd $USER 2>/dev/null | cut -d: -f6)}"
 FONTS_DIR="$HOME_DIR/.local/share/fonts"
+BINS_DIR="$HOME_DIR/.local/bin"
 SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo
@@ -106,8 +107,8 @@ echo "Setting up Shell..."
 config "$SOURCE_DIR/config" ".aliases" $HOME_DIR
 config "$SOURCE_DIR/config" ".localrc" $HOME_DIR
 
-if [[ ! -d "$HOME_DIR/.local/bin" ]] then
-    mkdir -p "$HOME_DIR/.local/bin"
+if [[ ! -d "$BINS_DIR" ]] then
+    mkdir -p "$BINS_DIR"
 fi
 
 echo "Done!"
@@ -148,6 +149,11 @@ echo "Setting up NVM..."
     if ! command -v "nvm" &> /dev/null; then
         PROFILE=/dev/null bash -c 'curl -sS -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash > /dev/null 2>&1'
     fi
+echo "Done!"
+
+echo
+echo "Setting up diff-so-fancy"
+config "$SOURCE_DIR/tools" "diff-so-fancy" $BINS_DIR
 echo "Done!"
 
 echo
