@@ -2,7 +2,7 @@
 
 This repository houses my personalized collection of dotfiles and configuration settings tailored specifically to optimize my development workflow and enhance my productivity.
 
-Contained within are meticulously crafted configurations for Git, Z Shell (ZSH), Powerlevel10k theming, and Node Version Manager (nvm) setup, all meticulously tailored to suit my preferences and requirements.
+Contained within are meticulously crafted configurations for Git, Z Shell (ZSH), Powerlevel10k theming, and NVM setup, all meticulously tailored to suit my preferences and requirements.
 
 While primarily intended for my personal use, this repository is openly shared to serve as a reference or source of inspiration for others seeking to streamline their development environments or explore alternative configurations.
 

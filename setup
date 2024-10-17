@@ -6,7 +6,7 @@ set -e
 check_requirement() {
     if ! command -v $1 &> /dev/null; then
         echo "Ops! $2 was not found, you will have to install it and try again."
-        
+
         if [[ "$0" = "$BASH_SOURCE" ]] then
             exit 1
         fi
@@ -67,7 +67,7 @@ echo
 
 if [[ ! $REPLY =~ ^[Yy]$ ]] then
     echo "Exiting..."
-    
+
     if [[ "$0" = "$BASH_SOURCE" ]] then
         exit 1
     fi
@@ -115,16 +115,13 @@ echo "Done!"
 
 echo
 echo "Setting up Antigen..."
-
-if [[ ! -f "$HOME_DIR/antigen.zsh" ]] then
-    curl -sS -L git.io/antigen > $HOME_DIR/antigen.zsh
-fi
-
+config "$SOURCE_DIR/tools" "antigen.zsh" $HOME_DIR
 echo "Done!"
 
 echo
 echo "Setting up ZSH..."
 config "$SOURCE_DIR/config" ".zshrc" $HOME_DIR
+chsh -s $(which zsh)
 echo "Done!"
 
 echo
@@ -171,7 +168,7 @@ echo "Setting up custom fonts"
         fi
     done
 
-    fc-cache -f
+    sudo fc-cache -f
 echo "Done!"
 
 check_recommendations "vim" "xclip" "bat" "glow"
