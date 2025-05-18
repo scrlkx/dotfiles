@@ -88,6 +88,7 @@ echo "Saved at $BACKUP_FOLDER"
 echo
 
 echo "Installing brew..."
+export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
 NONINTERACTIVE=1 bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh?NONINTERACTIVE)">/dev/null
 echo "Done!"
 

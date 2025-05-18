@@ -8,6 +8,7 @@ export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
 
 export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
 
 # Setup nvm files including
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
