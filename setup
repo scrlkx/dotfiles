@@ -38,7 +38,7 @@ check_recommendations() {
 
     if [ ${#MISSING[@]} -gt 0 ]; then
         echo
-        echo "The following recommended resources was not found. Please, consider installing them right after we are done."
+        echo "The following recommended resources was not found. Consider installing them."
 
         for CMD in "${MISSING[@]}"; do
             echo "- $CMD"
@@ -50,6 +50,7 @@ echo "Starting to setup your Linux..."
 
 USER="${USER:-$(id -u -n)}"
 HOME_DIR="${HOME_DIR:-$(getent passwd $USER 2>/dev/null | cut -d: -f6)}"
+CONFIG_DIR="$HOME_DIR/.config"
 FONTS_DIR="$HOME_DIR/.local/share/fonts"
 BINS_DIR="$HOME_DIR/.local/bin"
 SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -77,8 +78,9 @@ echo
 echo "Checking for all requirements..."
 
 check_requirement "curl" "curl"
-check_requirement "git" "Git"
-check_requirement "zsh" "ZSH"
+check_requirement "git" "git"
+check_requirement "zsh" "zsh"
+check_requirement "kitty" "kitty"
 
 echo "All good!"
 
@@ -98,12 +100,20 @@ backup $HOME_DIR ".localrc" $BACKUP_FOLDER
 backup $HOME_DIR ".zshrc" $BACKUP_FOLDER
 backup $HOME_DIR ".gitconfig" $BACKUP_FOLDER
 backup $HOME_DIR ".gitconfig.local" $BACKUP_FOLDER
+backup "$CONFIG_DIR/kitty" "kitty.conf" $BACKUP_FOLDER
 
 echo "Saved at $BACKUP_FOLDER"
 
 echo
 
-echo "Setting up Shell..."
+echo "Setting up git..."
+config "$SOURCE_DIR/config" ".gitconfig" $HOME_DIR
+config "$SOURCE_DIR/config" ".gitconfig.local" $HOME_DIR
+echo "Done!"
+
+echo
+
+echo "Setting up shell..."
 config "$SOURCE_DIR/config" ".aliases" $HOME_DIR
 config "$SOURCE_DIR/config" ".localrc" $HOME_DIR
 
@@ -114,17 +124,20 @@ fi
 echo "Done!"
 
 echo
+
+echo "Setting up zsh..."
+config "$SOURCE_DIR/config" ".zshrc" $HOME_DIR
+chsh -s $(which zsh) >/dev/null
+echo "Done!"
+
+echo
+
 echo "Setting up Antigen..."
 config "$SOURCE_DIR/tools" "antigen.zsh" $HOME_DIR
 echo "Done!"
 
 echo
-echo "Setting up ZSH..."
-config "$SOURCE_DIR/config" ".zshrc" $HOME_DIR
-chsh -s $(which zsh)
-echo "Done!"
 
-echo
 echo "Setting up Powerlevel10k..."
 
 if [[ ! -d "$HOME_DIR/powerlevel10k" ]] then
@@ -136,39 +149,46 @@ config "$SOURCE_DIR/config" ".p10k.zsh" $HOME_DIR
 echo "Done!"
 
 echo
-echo "Setting up Git..."
-config "$SOURCE_DIR/config" ".gitconfig" $HOME_DIR
-config "$SOURCE_DIR/config" ".gitconfig.local" $HOME_DIR
+
+echo "Setting up kitty..."
+mkdir -p "$CONFIG_DIR/kitty"
+config "$SOURCE_DIR/config" "kitty.conf" "$CONFIG_DIR/kitty"
+chsh -s $(which zsh) >/dev/null
 echo "Done!"
 
 echo
-echo "Setting up NVM..."
-    if ! command -v "nvm" &> /dev/null; then
-        PROFILE=/dev/null bash -c 'curl -sS -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash > /dev/null 2>&1'
-    fi
+
+echo "Setting up nvm..."
+if ! command -v "nvm" &> /dev/null; then
+    PROFILE=/dev/null bash -c 'curl -sS -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash > /dev/null 2>&1'
+fi
 echo "Done!"
 
 echo
-echo "Setting up diff-so-fancy"
+
+echo "Setting up diff-so-fancy..."
 config "$SOURCE_DIR/tools" "diff-so-fancy" $BINS_DIR
 echo "Done!"
 
 echo
-echo "Setting up custom fonts"
-    if [[ ! -d "$FONTS_DIR" ]]; then
-        mkdir "$FONTS_DIR"
+
+echo "Setting up custom fonts..."
+
+if [[ ! -d "$FONTS_DIR" ]]; then
+    mkdir "$FONTS_DIR"
+fi
+
+for FONT_FOLDER in "$SOURCE_DIR/fonts"/*; do
+    if [[ -d "$FONT_FOLDER" ]]; then
+        FONT_NAME="$(basename "$FONT_FOLDER")"
+        TARGET_DIR="$FONTS_DIR/$FONT_NAME"
+
+        cp -r "$FONT_FOLDER" "$TARGET_DIR"
     fi
+done
 
-    for FONT_FOLDER in "$SOURCE_DIR/fonts"/*; do
-        if [[ -d "$FONT_FOLDER" ]]; then
-            FONT_NAME="$(basename "$FONT_FOLDER")"
-            TARGET_DIR="$FONTS_DIR/$FONT_NAME"
+sudo fc-cache -f
 
-            cp -r "$FONT_FOLDER" "$TARGET_DIR"
-        fi
-    done
-
-    sudo fc-cache -f
 echo "Done!"
 
 check_recommendations "vim" "xclip" "bat" "glow"
