@@ -3,8 +3,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# Include $HOME/.local/bin into PATH
 export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:/home/linuxbrew/.linuxbrew/bin"
 
 # Setup nvm files including
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
@@ -15,7 +15,7 @@ source $HOME/.aliases
 source $HOME/.localrc
 
 # Source Antigen
-source $HOME/antigen.zsh
+source $HOMEBREW_PREFIX/share/antigen/antigen.zsh
 
 # Antigen bundles setup
 antigen use oh-my-zsh
@@ -33,7 +33,6 @@ antigen bundle z
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-syntax-highlighting
 
-# Initialize Antigen
 antigen apply
 
 # Sources Powerlevel10k

@@ -11,5 +11,3 @@ alias reload!=". ~/.zshrc"
 alias sail="vendor/bin/sail"
 alias ssh="TERM=xterm-256color $(which ssh)"
 alias zshrc="vim ~/.zshrc"
-
-[[ -n $(command -v bat) ]] && alias cat="bat"

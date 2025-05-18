@@ -27,32 +27,13 @@ config() {
     cp "$1/$2" "$3/$2"
 }
 
-check_recommendations() {
-    MISSING=()
-
-    for CMD in "$@"; do
-        if ! command -v "$CMD" &> /dev/null; then
-            MISSING+=("$CMD")
-        fi
-    done
-
-    if [ ${#MISSING[@]} -gt 0 ]; then
-        echo
-        echo "The following recommended resources was not found. Consider installing them."
-
-        for CMD in "${MISSING[@]}"; do
-            echo "- $CMD"
-        done
-    fi
-}
-
 echo "Starting to setup your Linux..."
 
 USER="${USER:-$(id -u -n)}"
 HOME_DIR="${HOME_DIR:-$(getent passwd $USER 2>/dev/null | cut -d: -f6)}"
 CONFIG_DIR="$HOME_DIR/.config"
 FONTS_DIR="$HOME_DIR/.local/share/fonts"
-BINS_DIR="$HOME_DIR/.local/bin"
+BIN_DIR="$HOME_DIR/.local/bin"
 SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 echo
@@ -79,8 +60,8 @@ echo "Checking for all requirements..."
 
 check_requirement "curl" "curl"
 check_requirement "git" "git"
-check_requirement "zsh" "zsh"
 check_requirement "kitty" "kitty"
+check_requirement "zsh" "zsh"
 
 echo "All good!"
 
@@ -106,6 +87,18 @@ echo "Saved at $BACKUP_FOLDER"
 
 echo
 
+echo "Installing brew..."
+NONINTERACTIVE=1 bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh?NONINTERACTIVE)">/dev/null
+echo "Done!"
+
+echo
+
+echo "Installing antigen, nvm and diff-so-fancy..."
+brew install --quiet antigen nvm diff-so-fancy
+echo "Done!"
+
+echo
+
 echo "Setting up git..."
 config "$SOURCE_DIR/config" ".gitconfig" $HOME_DIR
 config "$SOURCE_DIR/config" ".gitconfig.local" $HOME_DIR
@@ -114,11 +107,12 @@ echo "Done!"
 echo
 
 echo "Setting up shell..."
+
 config "$SOURCE_DIR/config" ".aliases" $HOME_DIR
 config "$SOURCE_DIR/config" ".localrc" $HOME_DIR
 
-if [[ ! -d "$BINS_DIR" ]] then
-    mkdir -p "$BINS_DIR"
+if [[ ! -d "$BIN_DIR" ]] then
+    mkdir -p "$BIN_DIR"
 fi
 
 echo "Done!"
@@ -132,13 +126,7 @@ echo "Done!"
 
 echo
 
-echo "Setting up Antigen..."
-config "$SOURCE_DIR/tools" "antigen.zsh" $HOME_DIR
-echo "Done!"
-
-echo
-
-echo "Setting up Powerlevel10k..."
+echo "Setting up p10k..."
 
 if [[ ! -d "$HOME_DIR/powerlevel10k" ]] then
     git clone --quiet --depth=1 https://gitee.com/romkatv/powerlevel10k.git $HOME_DIR/powerlevel10k
@@ -151,23 +139,20 @@ echo "Done!"
 echo
 
 echo "Setting up kitty..."
-mkdir -p "$CONFIG_DIR/kitty"
+
+if [[ ! -d "$CONFIG_DIR/kitty" ]]; then
+    mkdir -p "$CONFIG_DIR/kitty"
+fi
+
 config "$SOURCE_DIR/config" "kitty.conf" "$CONFIG_DIR/kitty"
 chsh -s $(which zsh) >/dev/null
+
 echo "Done!"
 
 echo
 
-echo "Setting up nvm..."
-if ! command -v "nvm" &> /dev/null; then
-    PROFILE=/dev/null bash -c 'curl -sS -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash > /dev/null 2>&1'
-fi
-echo "Done!"
-
-echo
-
-echo "Setting up diff-so-fancy..."
-config "$SOURCE_DIR/tools" "diff-so-fancy" $BINS_DIR
+echo "Installing xclip, bat and glow..."
+brew install --quiet nvm diff-so-fancy xclip bat glow
 echo "Done!"
 
 echo
@@ -190,8 +175,6 @@ done
 sudo fc-cache -f
 
 echo "Done!"
-
-check_recommendations "vim" "xclip" "bat" "glow"
 
 echo
 echo "All done! Go ahead and make a good use of your OS."

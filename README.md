@@ -2,32 +2,41 @@
 
 This repository houses my personalized collection of dotfiles and configuration settings tailored specifically to optimize my development workflow and enhance my productivity.
 
-Contained within are meticulously crafted configurations for Git, Z Shell (ZSH), Powerlevel10k theming, and NVM setup, all meticulously tailored to suit my preferences and requirements.
-
 While primarily intended for my personal use, this repository is openly shared to serve as a reference or source of inspiration for others seeking to streamline their development environments or explore alternative configurations.
 
 ## What's Inside
 
-Uncover an array of exciting features within this repository, including:
+Besides being essentially ready-to-use and pretty polished, here’s a breakdown of everything that’s included:
 
-- **Optimized Git Configuration:** Begin your Git journey with a preconfigured setup tailored for efficiency.
-- **Flexible Git Settings:** Enable local overrides for personalized Git configurations on a per-machine basis.
-- **Z Shell Customization:** Elevate your shell experience through seamless Z Shell (ZSH) integration, a curated selection of plugins, and effortless management with Antigen.
-- **Powerlevel10k Theming**: Customize your shell's appearance and functionality with the Powerlevel10k theme.
-- **Node Version Manager (nvm) Setup:** Simplify Node.js version management with seamless nvm integration.
-- **Custom Fonts**: Improve your terminal's readability and aesthetics by integrating custom fonts that complement your theme and layout.
+### Installed Tools
 
-And more!
+- **[Antigen]** – A lightweight and fast plugin manager for [zsh], used to manage themes and plugins efficiently.
+- **[diff-so-fancy]** – Enhances the readability of `git diff` output by adding color and formatting, making code reviews in the terminal much easier.
+- **[nvm]** - Allows easy installation, management, and switching between multiple versions of Node.js.
+- **[Homebrew]** - The package manager that simplifies the installation of software and command-line tools.
+- **[xclip]** – Provides clipboard access from the command line on Linux, useful for piping content in or out of the clipboard
+- **[bat]** – A cat clone with syntax highlighting, Git integration, and line numbers for improved readability of file contents
+- **[glow]** – A terminal-based Markdown reader that renders .md files beautifully right in your CLI
+
+### Custom Fonts
+
+- **[JetBrainsMono]** - A developer-friendly monospaced font, used as my preferred choice for code editors.
+- **[MesloLGS]** - A customized version of MesloLG, recommended for use with [p10k] for proper icon and prompt alignment.
+
+### Configuration Files
+
+- **[git](config/.gitconfig)**
+- **[zsh](config/.zshrc)**
+- **[p10k](config/.p10k.zsh)**
+- **[kitty](config/kitty.conf)**
+- **[p10k](config/.p10k.zsh)**
+- **[aliases](config/.aliases)**
 
 ## Requirements
 
-Before going trought the installation process, ensure that the following requirements are met:
+Before going trought the installation process, ensure that the following requirements are installed on the machine: [curl], [git], [kitty] and [zsh].
 
-- [curl][]: Used for downloading files and resources.
-- [Git][]: Required for version control and cloning repositories.
-- [Z Shell (ZSH)][]: A powerful shell with additional features and customization options.
-
-## Setting Up
+## Usage
 
 To effortlessly configure your dotfiles, simply execute the provided setup script with the following steps:
 
@@ -37,15 +46,6 @@ To effortlessly configure your dotfiles, simply execute the provided setup scrip
 
 The setup script will automatically backup existing configuration files, configure new ones, and provide guidance throughout the process.
 
-## Recommendations
-
-Additionally, the script checks for the availability of the following resources and suggests installing them for an enhanced experience:
-
-- [vim][]: A highly configurable text editor.
-- [xclip][]: A command-line interface to the X11 clipboard.
-- [bat][]: A cat clone with syntax highlighting and Git integration.
-- [glow][]: A terminal markdown viewer with a TUI (Text-based User Interface).
-
 ## Backup and Restore
 
 Before making any changes to your configuration files, the setup script includes a backup feature to ensure that your existing settings are safely preserved. When you run the setup script, it automatically creates a backup folder (`dotfiles_backup`) in your home directory (`~/`) and saves copies of your current configuration files there.
@@ -53,9 +53,19 @@ Before making any changes to your configuration files, the setup script includes
 If you want to manually access your backup files or verify that the backup was successful, you can navigate to the `dotfiles_backup` folder in your home directory. Inside this folder, you'll find copies of your original configuration files, allowing you to restore them if needed.
 
 [curl]: https://curl.se
-[Git]: https://git-scm.com
-[Z Shell (ZSH)]: https://www.zsh.org
-[vim]: https://www.vim.org/
+[git]: https://git-scm.com
+[zsh]: https://www.zsh.org
+[kitty]: https://sw.kovidgoyal.net/kitty
+
+[Antigen]: https://antigen.sharats.me
+[diff-so-fancy]: https://github.com/so-fancy/diff-so-fancy
+[nvm]: https://nvm.sh
+[Homebrew]: https://brew.sh
 [xclip]: https://github.com/astrand/xclip
 [bat]: https://github.com/sharkdp/bat
 [glow]: https://github.com/charmbracelet/glow
+
+[JetBrainsMono]: https://www.jetbrains.com/lp/mono
+[MesloLGS]: https://github.com/romkatv/powerlevel10k?tab=readme-ov-file#meslo-nerd-font-patched-for-powerlevel10k
+
+[p10k]: https://github.com/romkatv/p10k
