@@ -31,7 +31,7 @@
     untrackedCache = true
 [fetch]
     prune = true
-    pruneTags = true 
+    pruneTags = true
 [help]
     autocorrect = 1
 [include]
@@ -42,3 +42,5 @@
     diffFilter = "diff-so-fancy --patch"
 [pull]
 	rebase = false
+[push]
+    autoSetupRemote = true
