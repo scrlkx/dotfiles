@@ -36,6 +36,7 @@ if ! zgenom saved; then
   zgenom load ohmyzsh/ohmyzsh plugins/nvm
   zgenom load ohmyzsh/ohmyzsh plugins/sudo
   zgenom load ohmyzsh/ohmyzsh plugins/z
+  zgenom load zsh-users/zsh-autosuggestions
   zgenom load zsh-users/zsh-syntax-highlighting
 
   zgenom save
