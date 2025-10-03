@@ -94,8 +94,14 @@ echo "Done!"
 
 echo
 
-echo "Installing antigen, nvm and diff-so-fancy..."
-brew install --quiet antigen nvm diff-so-fancy
+echo "Installing zgenom..."
+if [[ ! -d "$HOME_DIR/.zgenom" ]] then
+    git clone --quiet --depth=1 https://github.com/jandamm/zgenom.git $HOME_DIR/.zgenom
+fi
+echo "Done!"
+
+echo "Installing nvm and diff-so-fancy..."
+brew install --quiet nvm diff-so-fancy
 echo "Done!"
 
 echo

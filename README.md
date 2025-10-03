@@ -10,7 +10,7 @@ Besides being essentially ready-to-use and pretty polished, here’s a breakdown
 
 ### Installed Tools
 
-- **[Antigen]** – A lightweight and fast plugin manager for [zsh], used to manage themes and plugins efficiently.
+- **[zgenom]** – A lightweight and fast plugin manager for [zsh], used to manage themes and plugins efficiently.
 - **[diff-so-fancy]** – Enhances the readability of `git diff` output by adding color and formatting, making code reviews in the terminal much easier.
 - **[nvm]** - Allows easy installation, management, and switching between multiple versions of Node.js.
 - **[Homebrew]** - The package manager that simplifies the installation of software and command-line tools.
@@ -20,7 +20,8 @@ Besides being essentially ready-to-use and pretty polished, here’s a breakdown
 
 ### Custom Fonts
 
-- **[JetBrainsMono]** - A developer-friendly monospaced font, used as my preferred choice for code editors.
+- **[IBMPlexMono]** - A developer-friendly monospaced font, used as my preferred choice for code editors.
+- **[JetBrainsMono]** - Another developer-friendly monospaced font, alternative when IBMPlexMono doens't look that good.
 - **[MesloLGS]** - A customized version of MesloLG, recommended for use with [p10k] for proper icon and prompt alignment.
 
 ### Configuration Files
@@ -57,7 +58,7 @@ If you want to manually access your backup files or verify that the backup was s
 [zsh]: https://www.zsh.org
 [kitty]: https://sw.kovidgoyal.net/kitty
 
-[Antigen]: https://antigen.sharats.me
+[zgenom]: https://github.com/jandamm/zgenom
 [diff-so-fancy]: https://github.com/so-fancy/diff-so-fancy
 [nvm]: https://nvm.sh
 [Homebrew]: https://brew.sh

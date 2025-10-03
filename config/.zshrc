@@ -18,27 +18,33 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 source $HOME/.aliases
 source $HOME/.localrc
 
-# Source Antigen
-source $HOMEBREW_PREFIX/share/antigen/antigen.zsh
+# Source zgenom
+source "${HOME}/.zgenom/zgenom.zsh"
 
-# Antigen bundles setup
-antigen use oh-my-zsh
-antigen bundle aliases
-antigen bundle alias-finder
-antigen bundle command-not-found
-antigen bundle docker
-antigen bundle extract
-antigen bundle git
-antigen bundle git-flow
-antigen bundle npm
-antigen bundle nvm
-antigen bundle sudo
-antigen bundle z
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-syntax-highlighting
+if ! zgenom saved; then
+  zgenom oh-my-zsh
 
-antigen apply
+  zgenom load ohmyzsh/ohmyzsh plugins/aliases
+  zgenom load ohmyzsh/ohmyzsh plugins/alias-finder
+  zgenom load ohmyzsh/ohmyzsh plugins/command-not-found
+  zgenom load ohmyzsh/ohmyzsh plugins/docker
+  zgenom load ohmyzsh/ohmyzsh plugins/docker-compose
+  zgenom load ohmyzsh/ohmyzsh plugins/extract
+  zgenom load ohmyzsh/ohmyzsh plugins/git
+  zgenom load ohmyzsh/ohmyzsh plugins/git-flow
+  zgenom load ohmyzsh/ohmyzsh plugins/npm
+  zgenom load ohmyzsh/ohmyzsh plugins/nvm
+  zgenom load ohmyzsh/ohmyzsh plugins/sudo
+  zgenom load ohmyzsh/ohmyzsh plugins/z
+  zgenom load zsh-users/zsh-syntax-highlighting
+
+  zgenom save
+fi
 
 # Sources Powerlevel10k
 source $HOME/.p10k.zsh
 source $HOME/powerlevel10k/powerlevel10k.zsh-theme
+
+docker_kill() {
+  docker ps -a -q | xargs -r docker stop
+}
