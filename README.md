@@ -20,18 +20,16 @@ Besides being essentially ready-to-use and pretty polished, here’s a breakdown
 
 ### Custom Fonts
 
-- **[IBMPlexMono]** - A developer-friendly monospaced font, used as my preferred choice for code editors.
-- **[JetBrainsMono]** - Another developer-friendly monospaced font, alternative when IBMPlexMono doens't look that good.
+- **[IBM Plex Mono]** - A developer-friendly monospaced font, used as my preferred choice for code editors.
+- **[JetBrains Mono]** - Another developer-friendly monospaced font, alternative when [IBM Plex Mono] doens't look that good.
 - **[MesloLGS]** - A customized version of MesloLG, recommended for use with [p10k] for proper icon and prompt alignment.
 
 ### Configuration Files
 
 - **[git](config/.gitconfig)**
-- **[zsh](config/.zshrc)**
-- **[p10k](config/.p10k.zsh)**
 - **[kitty](config/kitty.conf)**
 - **[p10k](config/.p10k.zsh)**
-- **[aliases](config/.aliases)**
+- **[zsh](config/.zshrc)**
 
 ## Requirements
 
@@ -65,8 +63,8 @@ If you want to manually access your backup files or verify that the backup was s
 [xclip]: https://github.com/astrand/xclip
 [bat]: https://github.com/sharkdp/bat
 [glow]: https://github.com/charmbracelet/glow
-
-[JetBrainsMono]: https://www.jetbrains.com/lp/mono
-[MesloLGS]: https://github.com/romkatv/powerlevel10k?tab=readme-ov-file#meslo-nerd-font-patched-for-powerlevel10k
-
 [p10k]: https://github.com/romkatv/p10k
+
+[IBM Plex Mono]: https://github.com/IBM/plex
+[JetBrains Mono]: https://www.jetbrains.com/lp/mono
+[MesloLGS]: https://github.com/romkatv/powerlevel10k?tab=readme-ov-file#meslo-nerd-font-patched-for-powerlevel10k
