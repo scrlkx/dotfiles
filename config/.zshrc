@@ -1,4 +1,4 @@
-# Sources Powerlevel10k Instant Prompt
+# Powerlevel10k Instant Prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
@@ -10,15 +10,9 @@ export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
 
-# Setup nvm files including
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-# Source local configurations
-source $HOME/.aliases
-source $HOME/.localrc
-
-# Source zgenom
 source "${HOME}/.zgenom/zgenom.zsh"
 
 if ! zgenom saved; then
@@ -42,9 +36,13 @@ if ! zgenom saved; then
   zgenom save
 fi
 
-# Sources Powerlevel10k
+# Source Powerlevel10k
 source $HOME/.p10k.zsh
 source $HOME/powerlevel10k/powerlevel10k.zsh-theme
+
+# Source local files
+source $HOME/.aliases
+source $HOME/.localrc
 
 docker_kill() {
   docker ps -a -q | xargs -r docker stop
