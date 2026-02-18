@@ -10,9 +10,6 @@ export HOMEBREW_NO_ANALYTICS=1
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_PREFIX=/home/linuxbrew/.linuxbrew
 
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
 source "${HOME}/.zgenom/zgenom.zsh"
 
 if ! zgenom saved; then
@@ -27,11 +24,11 @@ if ! zgenom saved; then
   zgenom load ohmyzsh/ohmyzsh plugins/git
   zgenom load ohmyzsh/ohmyzsh plugins/git-flow
   zgenom load ohmyzsh/ohmyzsh plugins/npm
-  zgenom load ohmyzsh/ohmyzsh plugins/nvm
   zgenom load ohmyzsh/ohmyzsh plugins/sudo
   zgenom load ohmyzsh/ohmyzsh plugins/z
   zgenom load zsh-users/zsh-autosuggestions
   zgenom load zsh-users/zsh-syntax-highlighting
+  zgenom load lukechilds/zsh-nvm
 
   zgenom save
 fi

@@ -100,10 +100,6 @@ if [[ ! -d "$HOME_DIR/.zgenom" ]] then
 fi
 echo "Done!"
 
-echo "Installing nvm and diff-so-fancy..."
-brew install --quiet nvm diff-so-fancy
-echo "Done!"
-
 echo
 
 echo "Setting up git..."
@@ -136,7 +132,7 @@ echo
 echo "Setting up p10k..."
 
 if [[ ! -d "$HOME_DIR/powerlevel10k" ]] then
-    git clone --quiet --depth=1 https://gitee.com/romkatv/powerlevel10k.git $HOME_DIR/powerlevel10k
+    git clone --quiet --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME_DIR/powerlevel10k
 fi
 
 config "$SOURCE_DIR/config" ".p10k.zsh" $HOME_DIR
@@ -158,8 +154,8 @@ echo "Done!"
 
 echo
 
-echo "Installing xclip, bat and glow..."
-brew install --quiet nvm diff-so-fancy xclip bat glow
+echo "Installing diff-so-fancy, xclip, bat and glow..."
+brew install --quiet diff-so-fancy xclip bat glow
 echo "Done!"
 
 echo
