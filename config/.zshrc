@@ -37,10 +37,28 @@ fi
 source $HOME/.p10k.zsh
 source $HOME/powerlevel10k/powerlevel10k.zsh-theme
 
-# Source local files
-source $HOME/.aliases
+# Source local file
 source $HOME/.localrc
 
-docker_kill() {
+alias artisan="php artisan"
+alias c="clear"
+alias dc="docker compose"
+alias markdown="glow"
+alias md="glow"
+alias nv="nvim ."
+alias reload!=". ~/.zshrc"
+alias sail="vendor/bin/sail"
+alias ssh="TERM=xterm-256color $(which ssh)"
+alias zshrc="vim ~/.zshrc"
+
+docker-kill() {
   docker ps -a -q | xargs -r docker stop
+}
+
+ssh-verify() {
+  ssh-keygen -y -f "$1"
+}
+
+clip() {
+  xclip -sel clip < "$1"
 }

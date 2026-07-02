@@ -60,7 +60,7 @@ echo "Checking for all requirements..."
 
 check_requirement "curl" "curl"
 check_requirement "git" "git"
-check_requirement "kitty" "kitty"
+# check_requirement "kitty" "kitty"
 check_requirement "zsh" "zsh"
 
 echo "All good!"
@@ -111,7 +111,6 @@ echo
 
 echo "Setting up shell..."
 
-config "$SOURCE_DIR/config" ".aliases" $HOME_DIR
 config "$SOURCE_DIR/config" ".localrc" $HOME_DIR
 
 if [[ ! -d "$BIN_DIR" ]] then
